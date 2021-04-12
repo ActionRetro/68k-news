@@ -1,10 +1,18 @@
 <?php
+define('USE_CACHE', true);
+
 require_once('vendor/autoload.php');
+if(USE_CACHE) require_once('cache_database.php');
 
 $article_url = "";
 $article_html = "";
 $error_text = "";
+$readable_article = "";
+$article_images = array();
+$article_title = "";
 $loc = "US";
+$from_cache = USE_CACHE;
+$database = null;
 
 if( isset( $_GET['loc'] ) ) {
     $loc = strtoupper($_GET["loc"]);
@@ -32,20 +40,42 @@ $configuration
 
 $readability = new Readability($configuration);
 
-if(!$article_html = file_get_contents($article_url)) {
-    $error_text .=  "Failed to get the article :( <br>";
+if($from_cache){
+    $database = CacheDatabase::getInstance();
+    $cachedArticle = is_null($database) ? null : $database->getFromCache($article_url);
+    if(!is_null($cachedArticle)){
+        $article_title = $cachedArticle[0];
+        $readable_article = $cachedArticle[1];
+        $article_images = $cachedArticle[2];
+    }else $from_cache = false;
 }
 
-try {
-    $readability->parse($article_html);
-    $readable_article = strip_tags($readability->getContent(), '<ol><ul><li><br><p><small><font><b><strong><i><em><blockquote><h1><h2><h3><h4><h5><h6>');
-    $readable_article = str_replace( 'strong>', 'b>', $readable_article ); //change <strong> to <b>
-    $readable_article = str_replace( 'em>', 'i>', $readable_article ); //change <em> to <i>
-    
-    $readable_article = clean_str($readable_article);
-    
-} catch (ParseException $e) {
-    $error_text .= 'Sorry! ' . $e->getMessage() . '<br>';
+if(!$from_cache){
+    $opts = array(
+        'http'=>array(
+            'method'=>"GET",
+            'header'=>"User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0\r\n"
+        )
+    );
+
+
+    if(!$article_html = file_get_contents($article_url, false, stream_context_create($opts))) {
+        $error_text .=  "Failed to get the article :( <br>";
+    }
+
+    try {
+        $readability->parse($article_html);
+        $readable_article = strip_tags($readability->getContent(), '<ol><ul><li><br><p><small><font><b><strong><i><em><blockquote><h1><h2><h3><h4><h5><h6>');
+        $readable_article = str_replace( 'strong>', 'b>', $readable_article ); //change <strong> to <b>
+        $readable_article = str_replace( 'em>', 'i>', $readable_article ); //change <em> to <i>
+        
+        $readable_article = clean_str($readable_article);
+        $article_title = $readability->getTitle();
+        $article_images = $readability->getImages();
+        if(!is_null($database)) $database->writeToCache($article_url, $article_title, $readable_article, $article_images);
+    } catch (ParseException $e) {
+        $error_text .= 'Sorry! ' . $e->getMessage() . '<br>';
+    }
 }
 
 //replace chars that old machines probably can't handle
@@ -64,15 +94,15 @@ function clean_str($str) {
  
  <html>
  <head>
-     <title><?php echo $readability->getTitle();?></title>
+     <title><?php echo $article_title;?></title>
  </head>
  <body>
     <small><a href="/index.php?loc=<?php echo $loc ?>">< Back to <font color="#9400d3">68k.news</font> <?php echo $loc ?> front page</a></small>
-    <h1><?php echo clean_str($readability->getTitle());?></h1>
+    <h1><?php echo clean_str($article_title);?></h1>
     <p><small><a href="<?php echo $article_url ?>" target="_blank">Original source</a> (on modern site) <?php
         $img_num = 0;
         $imgline_html = "| Article images:";
-        foreach ($readability->getImages() as $image_url):
+        foreach ($article_images as $image_url):
             //we can only do png and jpg
             if (strpos($image_url, ".jpg") || strpos($image_url, ".jpeg") || strpos($image_url, ".png") === true) {
                 $img_num++;
