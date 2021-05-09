@@ -4,7 +4,7 @@
     $loc = "US";
 
     if( isset( $_GET['loc'] ) ) {
-        $loc = strtoupper($_GET["loc"]);
+        $loc = urlencode(strtoupper($_GET["loc"]));
     }
     
     //get the image url

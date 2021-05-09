@@ -3,7 +3,7 @@
 $loc = "US";
 
 if( isset( $_GET['loc'] ) ) {
-    $loc = $_GET["loc"];
+    $loc = urlencode($_GET["loc"]);
 }
 
 ?>
