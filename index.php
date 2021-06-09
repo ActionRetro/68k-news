@@ -51,7 +51,7 @@ function clean_str($str) {
 
 <html>
 <head>
-	<title>68k.news: Headlines From the Future</title>
+	<title>68k.epoch: Headlines From the Future</title>
 </head>
 <body>
 	<center><h1><b>68k.epoch:</b> <font color="#9400d3"><i>Headlines from the Future with no bias</i></font></h1></center>
