@@ -17,7 +17,7 @@ if( isset( $_GET['a'] ) ) {
     exit();
 }
 
-if (substr( $article_url, 0, 23 ) != "https://news.google.com") {
+if (substr( $article_url, 0, 23 ) != "https://www.theepochtimes.com/c-world/feed/") {
     echo("That's not news :(");
     die();
 }
