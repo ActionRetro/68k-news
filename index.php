@@ -21,7 +21,7 @@ if($section) {
 	$feed_url="https://www.theepochtimes.com/feed/".strtoupper($section)."?ned=".$loc."&hl=".$lang;
 } else {}
 
-//https://news.google.com/news/rss/headlines/section/topic/CATEGORYNAME?ned=in&hl=en
+//https://www.theepochtimes.com/feed/
 $feed = new SimplePie();
  
 // Set the feed to process.
