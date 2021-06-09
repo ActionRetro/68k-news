@@ -18,10 +18,8 @@ if(isset( $_GET['lang'])) {
 }
 
 if($section) {
-	$feed_url="https://news.google.com/news/rss/headlines/section/topic/".strtoupper($section)."?ned=".$loc."&hl=".$lang;
-} else {
-	$feed_url="https://news.google.com/rss?gl=".$loc."&hl=".$lang."-".$loc."&ceid=".$loc.":".$lang;
-}
+	$feed_url="https://www.theepochtimes.com/feed/".strtoupper($section)."?ned=".$loc."&hl=".$lang;
+} else {}
 
 //https://news.google.com/news/rss/headlines/section/topic/CATEGORYNAME?ned=in&hl=en
 $feed = new SimplePie();
@@ -56,9 +54,9 @@ function clean_str($str) {
 	<title>68k.news: Headlines From the Future</title>
 </head>
 <body>
-	<center><h1><b>68k.news:</b> <font color="#9400d3"><i>Headlines from the Future</i></font></h1></center>
+	<center><h1><b>68k.epoch:</b> <font color="#9400d3"><i>Headlines from the Future with no bias</i></font></h1></center>
 	<hr>
-	<center><small>Basic HTML Google News for vintage computers. Built by <a href="https://youtube.com/ActionRetro" target="_blank"><b>Action Retro</b></a> on YouTube. Tested on Netscape 1.1 through 4 on a Mac SE/30.</small></center>
+	<center><small>Basic HTML News from the epoch times for vintage computers. Built off of code by <b>Action Retro</b></a>. Tested on Netscape on a Mac LC III.</small></center>
 	<?php
 	if($section) {
 		$section_title = explode(" - ", strtoupper($feed->get_title()));
