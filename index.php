@@ -18,7 +18,7 @@ if(isset( $_GET['lang'])) {
 }
 
 if($section) {
-	$feed_url="https://www.theepochtimes.com/feed/".strtoupper($section)."?ned=".$loc."&hl=".$lang;
+	$feed_url="https://www.theepochtimes.com/feed/";
 } else {}
 
 //https://www.theepochtimes.com/feed/
