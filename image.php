@@ -9,7 +9,7 @@
     
     //get the image url
     if (isset( $_GET['i'] ) ) {
-        $url = $_GET[ 'i' ];
+        $url = urldecode($_GET[ 'i' ]);
     } else {
         exit();
     }
