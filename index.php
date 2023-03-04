@@ -1,6 +1,13 @@
 <?php
+// send noindex headers if any url params
+$any_params = parse_url("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+//if(strlen($any_params['query']) > 0) {
+if(array_key_exists('query', $any_params)) {
+    header("X-Robots-Tag: noindex, nofollow", true);
+}
 
-require_once('php/autoloader.php');
+//require_once('php/autoloader.php');
+require_once('vendor/SimplePie.compiled.php');
 
 $section="";
 $loc = "US";

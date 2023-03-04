@@ -1,5 +1,5 @@
 <?php
-
+    header("X-Robots-Tag: noindex, nofollow", true);
     $url = "";
     $loc = "US";
 

@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
+header("X-Robots-Tag: noindex, nofollow", true);
 require_once('vendor/autoload.php');
 
 $article_url = "";
@@ -21,6 +23,12 @@ if (substr( $article_url, 0, 23 ) != "https://news.google.com") {
     echo("That's not news :(");
     die();
 }
+
+/* just a hacky fix lol, maybe make this better later */
+$google_redirect_page = file_get_contents($article_url);
+$parts = explode('<a href="', $google_redirect_page);
+$actual_article_url = explode('"',$parts[1])[0];
+$article_url = $actual_article_url;
 
 use andreskrey\Readability\Readability;
 use andreskrey\Readability\Configuration;
@@ -45,7 +53,7 @@ try {
     $readable_article = clean_str($readable_article);
     
 } catch (ParseException $e) {
-    $error_text .= 'Sorry! ' . $e->getMessage() . '<br>';
+    $error_text .= 'Sorry - working on it! ' . $e->getMessage() . '<br>';
 }
 
 //replace chars that old machines probably can't handle
