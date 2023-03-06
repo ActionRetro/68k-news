@@ -86,12 +86,15 @@ function clean_str($str) {
 	foreach ($feed->get_items() as $item):
 	?>
  
-			<h3><font size="5"><a href="<?php echo 'article.php?loc=' . $loc . '&a=' . $item->get_permalink(); ?>"><?php echo clean_str($item->get_title()); ?></a></font></h3>
+			<h3><font size="5"><a href="<?php echo 'article.php?loc=' . $loc . '&a=' . urlencode($item->get_permalink()); ?>"><?php echo clean_str($item->get_title()); ?></a></font></h3>
 			<p><font size="4"><?php 
             $subheadlines = clean_str($item->get_description());
             $remove_google_link = explode("<li><strong>", $subheadlines);
             $no_blank = str_replace('target="_blank"', "", $remove_google_link[0]) . "</li></ol></font></p>"; 
-            $cleaned_links = str_replace('<a href="', '<a href="article.php?loc=' . $loc . '&a=', $no_blank);
+            $url_encoded_links = preg_replace_callback('/href="(.+?)"/',
+                    function($m) { return 'href="' . urlencode($m[1]) . '"'; },
+                    $no_blank); 
+            $cleaned_links = str_replace('<a href="', '<a href="article.php?loc=' . $loc . '&a=', $url_encoded_links);
 			$cleaned_links = strip_tags($cleaned_links, '<a><ol><ul><li><br><p><small><font><b><strong><i><em><blockquote><h1><h2><h3><h4><h5><h6>');
     		$cleaned_links = str_replace( 'strong>', 'b>', $cleaned_links); //change <strong> to <b>
     		$cleaned_links = str_replace( 'em>', 'i>', $cleaned_links); //change <em> to <i>
