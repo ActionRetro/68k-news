@@ -9,7 +9,7 @@ $error_text = "";
 $loc = "US";
 
 if( isset( $_GET['loc'] ) ) {
-    $loc = strtoupper($_GET["loc"]);
+    $loc = urlencode(strtoupper($_GET["loc"]));
 }
 
 if( isset( $_GET['a'] ) ) {
@@ -77,7 +77,7 @@ function clean_str($str) {
  <body>
     <small><a href="/index.php?loc=<?php echo $loc ?>">< Back to <font color="#9400d3">68k.news</font> <?php echo $loc ?> front page</a></small>
     <h1><?php echo clean_str($readability->getTitle());?></h1>
-    <p><small><a href="<?php echo $article_url ?>" target="_blank">Original source</a> (on modern site) <?php
+    <p><small><a href="<?php echo urlencode($article_url) ?>" target="_blank">Original source</a> (on modern site) <?php
         $img_num = 0;
         $imgline_html = "| Article images:";
         foreach ($readability->getImages() as $image_url):

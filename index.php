@@ -15,13 +15,13 @@ $lang = "en";
 $feed_url="";
 
 if(isset( $_GET['section'])) {
-    $section = $_GET["section"];
+    $section = urlencode($_GET["section"]);
 }
 if(isset( $_GET['loc'])) {
-    $loc = strtoupper($_GET["loc"]);
+    $loc = urlencode(strtoupper($_GET["loc"]));
 }
 if(isset( $_GET['lang'])) {
-    $lang = $_GET["lang"];
+    $lang = urlencode($_GET["lang"]);
 }
 
 if($section) {
