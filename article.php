@@ -2,6 +2,7 @@
 error_reporting(E_ERROR | E_PARSE);
 header("X-Robots-Tag: noindex, nofollow", true);
 require_once('vendor/autoload.php');
+require_once('php/googlenews.php');
 
 $article_url = "";
 $article_html = "";
@@ -24,10 +25,9 @@ if (substr( $article_url, 0, 23 ) != "https://news.google.com") {
     die();
 }
 
-/* just a hacky fix lol, maybe make this better later */
-$google_redirect_page = file_get_contents($article_url);
-$parts = explode('<a href="', $google_redirect_page);
-$actual_article_url = explode('"',$parts[1])[0];
+$google_decoder = new GoogleDecoder();
+$decode_result = $google_decoder->decodeGoogleNewsUrl($article_url);
+$actual_article_url = $decode_result['decoded_url'];
 $article_url = $actual_article_url;
 
 use andreskrey\Readability\Readability;
