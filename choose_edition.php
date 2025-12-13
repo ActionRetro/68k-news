@@ -23,7 +23,7 @@ if( isset( $_GET['loc'] ) ) {
     <p><a href='/index.php?section=nation&loc=US'>United States</a></p>
     <p><a href='/index.php?section=nation&loc=JP'>Japan</a></p>
     <p><a href='/index.php?section=nation&loc=UK'>United Kingdom</a></p>
-    <p>Spain (RIP)</p>
+    <p><a href='/index.php?section=nation&loc=ES'>Spain</a></p>
     <p><a href='/index.php?section=nation&loc=CA'>Canada</a></p>
     <p><a href='/index.php?section=nation&loc=DE'>Deutschland</a></p>
     <p><a href='/index.php?section=nation&loc=IT'>Italia</a></p>
