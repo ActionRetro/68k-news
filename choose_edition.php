@@ -29,6 +29,7 @@ if( isset( $_GET['loc'] ) ) {
     <p><a href='/index.php?section=nation&loc=IT'>Italia</a></p>
     <p><a href='/index.php?section=nation&loc=FR'>France</a></p>
     <p><a href='/index.php?section=nation&loc=AU'>Australia</a></p>
+    <p><a href='/index.php?section=nation&loc=NZ'>New Zealand</a></p>
     <p><a href='/index.php?section=nation&loc=TW'>Taiwan</a></p>
     <p><a href='/index.php?section=nation&loc=NL'>Nederland</a></p>
     <p><a href='/index.php?section=nation&loc=BR'>Brasil</a></p>
