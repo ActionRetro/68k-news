@@ -40,7 +40,21 @@ $configuration
 
 $readability = new Readability($configuration);
 
-if(!$article_html = file_get_contents($article_url)) {
+$opts = [
+    'http' => [
+        'method' => 'GET',
+        'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36\r\n",
+        'timeout' => 15,
+        'ignore_errors' => true,
+    ],
+    'ssl' => [
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+    ]
+];
+$context = stream_context_create($opts);
+
+if(!$article_html = file_get_contents($article_url, false, $context)) {
     $error_text .=  "Failed to get the article :( <br>";
 }
 

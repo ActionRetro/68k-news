@@ -6,8 +6,7 @@ if(array_key_exists('query', $any_params)) {
     header("X-Robots-Tag: noindex, nofollow", true);
 }
 
-//require_once('php/autoloader.php');
-require_once('vendor/SimplePie.compiled.php');
+require_once('vendor/autoload.php');
 
 $section="";
 $loc = "US";
@@ -31,7 +30,7 @@ if($section) {
 }
 
 //https://news.google.com/news/rss/headlines/section/topic/CATEGORYNAME?ned=in&hl=en
-$feed = new SimplePie();
+$feed = new \SimplePie\SimplePie();
  
 // Set the feed to process.
 $feed->set_feed_url($feed_url);
