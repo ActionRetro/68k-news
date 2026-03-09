@@ -1,5 +1,6 @@
 {
     "require": {
-        "andreskrey/readability.php": "^2.1"
+        "andreskrey/readability.php": "^2.1",
+        "simplepie/simplepie": "^1.9"
     }
 }
